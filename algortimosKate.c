@@ -146,4 +146,65 @@ int Algoritmo Fib (int n) { // realizado con divide and conquer
 		return Fib(n − 1)+Fib(n − 2);
 	}
 }
-	
+
+
+int Algoritmo Cambio(int v) { //input: monto. output: numero de monedas
+	int n = 0;
+	int accum = 0;
+	int i = 0;
+	int coins[] = [500, 200, 100, 50, 20, 10, 5, 1];
+	while (accum < v ) && (i < length(coins)) {
+		if (accum + coins[i] <= v) {
+			accum = accum + coins[i];
+			n = n+1; //mayor moneda que podemos usar
+		}
+		else {
+			i = i+1; //seguimos buscando
+		}
+	}
+	if (i < length(coins )) 
+		return n; //devolvemos el numero de monedas usadas
+	else return -1 // no hay solucion
+}
+
+float [] Algoritmo Knapsack (obj [ ] O, int max) { // O[i].weight, O[i].value
+	float[]R // la salida
+	sort O by value / weight // Θ(n log n)
+	for(i=0; i<n; i++){ // Θ(n)
+		R[i] = 0
+	}
+	i=0
+	int accum = 0
+	while( accum < max) && (i < n){ // Θ(n)
+		R[i] = min(1, (max − accum)/O[i].weight)
+		accum = accum + R[i] ∗ O[i].weight
+		i++
+	}
+	return R
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
