@@ -148,41 +148,69 @@ int Algoritmo Fib (int n) { // realizado con divide and conquer
 }
 
 
-int Algoritmo Cambio(int v) { //input: monto. output: numero de monedas
-	int n = 0;
-	int accum = 0;
+int Algoritmo Cambio(int monto) { //input: monto. output: numero de monedas
+	int cantidadMonedasUsadas = 0;
+	int montoPagado = 0;
 	int i = 0;
-	int coins[] = [500, 200, 100, 50, 20, 10, 5, 1];
-	while (accum < v ) && (i < length(coins)) {
-		if (accum + coins[i] <= v) {
-			accum = accum + coins[i];
-			n = n+1; //mayor moneda que podemos usar
+	int monedas[] = [500, 200, 100, 50, 20, 10, 5, 1];
+	while (montoPagado < monto ) && (i < monedas.length) {
+		if (montoPagado + monedas[i] <= montoPagado) {
+			montoPagado = montoPagado + monedas[i];
+			cantidadMonedasUsadas++; //mayor moneda que podemos usar
 		}
 		else {
-			i = i+1; //seguimos buscando
+			i++; //seguimos buscando
 		}
 	}
-	if (i < length(coins )) 
-		return n; //devolvemos el numero de monedas usadas
+	if (i < monedas.length) 
+		return cantidadMonedasUsadas; //devolvemos el numero de monedas usadas
 	else return -1 // no hay solucion
 }
 
-float [] Algoritmo Knapsack (obj [ ] O, int max) { // O[i].weight, O[i].value
-	float[]R // la salida
-	sort O by value / weight // Θ(n log n)
-	for(i=0; i<n; i++){ // Θ(n)
-		R[i] = 0
+struct objetosGreedy {
+	int valor;
+	int peso;
+}
+
+float [] ordenar(objetosGreedy [] objetos) { // O(n log(n))
+	float[] ordenados = new float[objetos.length]
+	for (int i = 0; i<objetos.length; i++) {
+		ordenados[i] = objetos[i].peso / objetos[i].valor;
+	}
+	sort(ordenados);
+	return ordenados;
+}
+
+float [] Algoritmo MochilaGreedy (objetosGreedy[ ] objetos, int max) { 
+// objetos[i].peso, objetos[i].valor
+	float[] conjuntoSolucion; // la salida
+	float[] objetosOrdenados = ordenar(objetos); // O(n log(n))
+	for(int i =0; i<objetos.length; i++){ // Θ(n) : inicializo el conjunto solucion
+		conjuntoSolucion[i] = 0
 	}
 	i=0
 	int accum = 0
-	while( accum < max) && (i < n){ // Θ(n)
-		R[i] = min(1, (max − accum)/O[i].weight)
-		accum = accum + R[i] ∗ O[i].weight
+	while( accum < max) && (i < objetos.length){ // Θ(n)
+		conjuntoSolucion[i] = min(1, (max − accum)/objetos[i].peso)
+		accum = accum + (conjuntoSolucion[i] ∗ objetos[i].peso)
 		i++
 	}
-	return R
+	return conjuntoSolucion;
 }
 
+// ESQUEMA GENERICO DE GREEDY
+Algoritmo GreedyGenerico:
+	input: conjuntoCandidatos[]
+	output: conjuntoSolucion[] //conjunto solucion del problema
+	while conjuntoCandidatos no sea vacío Y NO funcionSolucion(conjuntoSolucion):
+		x = funcionSeleccion(conjuntoCandidatos)
+		conjuntoCandidatos = conjuntoCandidatos/x
+		if funcionFactibilidad(conjuntoSolucion union x):
+			conjuntoSolucion = conjuntoSolucion union x
+	if funcionSolucion(conjuntoSolucion):
+		return conjuntoSolucion
+	else
+		return "No hay solucion"
 
 
 
