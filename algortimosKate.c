@@ -212,7 +212,26 @@ Algoritmo GreedyGenerico:
 	else
 		return "No hay solucion"
 
+// ALGORITMO DIJKSTRA CASO 1: 
+// retorna el grafo con solo las aristas de menor costo desde el vertice origen
+struct GrafoTDA {
+	int [] vertices;
+	int [] aristas;
+}
 
+algoritmo Dijkstra (GrafoTDA grafoInicial, int verticeOrigen) {
+	int []visitados = {verticeOrigen}
+	GrafoTDA grafoFinal = inicializarGrafo() // inicializa el grafo solución
+	foreach vertice in grafoInicial.vertices {
+		grafoFinal.agregarVertice(vertice) // Los nodos de grafoInicial
+	}
+	foreach w ∈ G.Vecindario(v) {
+	Dijkstra.AgregarArista(v, w, G.Peso(v, w))
+	}
+	Candidatos.InicializarConjunto() // Nodos candidatos
+	Candidatos = G.vertices\Visitados
+
+}
 
 
 
