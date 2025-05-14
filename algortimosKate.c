@@ -324,7 +324,7 @@ arbol Kruskal (Grafo grafo) {
 		nodoOrigen = buscar(arista.nodoOrigen);
 		nodoDestino = buscar(arista.nodoDestino);
 		if (nodoOrigen != nodoDestino){
-			combinar (nodoOrigen, nodoDestino) //fusiona los dos arboles triviales
+			combinar(nodoOrigen, nodoDestino) //fusiona los dos arboles triviales
 			arbol = arbol union {(arista)} //añade la arista al arbol
 		}
 	}
