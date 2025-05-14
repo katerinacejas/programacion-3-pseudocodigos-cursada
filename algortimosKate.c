@@ -212,8 +212,8 @@ Algoritmo GreedyGenerico:
 	else
 		return "No hay solucion"
 
-// ALGORITMO DIJKSTRA CASO 1: 
-// retorna el grafo con solo las aristas de menor costo desde el vertice origen
+// ALGORITMO DIJKSTRA CASO 2: 
+// retorna el grafo con el camino minimo desde el vertice origen hacia todos los demas
 struct GrafoTDA {
 	int [] vertices;
 	int [] aristas;
@@ -225,16 +225,44 @@ algoritmo Dijkstra (GrafoTDA grafoInicial, int verticeOrigen) {
 	foreach vertice in grafoInicial.vertices {
 		grafoFinal.agregarVertice(vertice) // Los nodos de grafoInicial
 	}
-	foreach w ∈ G.Vecindario(v) {
-	Dijkstra.AgregarArista(v, w, G.Peso(v, w))
+	foreach vertice ∈ grafoInicial.vecindario(verticeOrigen) {
+		grafoFinal.agregarArista(verticeOrigen, vertice, grafoInicial.peso(verticeOrigen, vertice))
 	}
-	Candidatos.InicializarConjunto() // Nodos candidatos
-	Candidatos = G.vertices\Visitados
-
+	int []candidatos = inicializarConjunto() // Nodos candidatos
+	candidatos = grafoInicial.vertices \ visitados //el operador \ realiza una resta de conjuntos
+	while !candidatos.conjuntoVacio() {
+		int min = infinito
+		int nodoAux;
+		foreach nodo ∈ candidatos {
+			if (grafoFinal.existeArista(verticeOrigen, nodo) && 
+				grafoFinal.peso(verticeOrigen, nodo) < min) {
+					min = grafoFinal.peso(verticeOrigen, nodo)
+					nodoAux = nodo
+			}
+		}
+		visitados.agregarVertice(nodoAux)
+		candidatos.sacar(nodoAux)
+		int[] candidatosAux = copiar(candidatos)
+		int nodoAux2;
+		while !candidatosAux.conjuntoVacio() {
+			nodoAux2 = candidatosAux.elegir()
+			candidatosAux.sacar(nodoAux2)
+			if (grafoInicial.existeArista(nodoAux, nodoAux2)) {
+				if(grafoFinal.existeArista(verticeOrigen, nodoAux2)) {
+					if(grafoFinal.peso(verticeOrigen, nodoAux) + grafoInicial.peso(nodoAux, nodoAux2)
+						< grafoFinal.peso(verticeOrigen, nodoAux2)) {
+							grafoFinal.agregarArista(nodoAux, nodoAux2, grafoInicial.peso(nodoAux, nodoAux2))
+							grafoFinal.eliminarArista(verticeOrigen, nodoAux2)
+					}
+				}
+				else {
+					grafoFinal.agregarAristaI(nodoAux, nodoAux2, grafoInicial.peso(nodoAux, nodoAux2))
+				}
+			}
+		}
+	}
+	return grafoFinal
 }
-
-
-
 
 
 
