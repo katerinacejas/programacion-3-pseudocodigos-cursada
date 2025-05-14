@@ -264,7 +264,40 @@ algoritmo Dijkstra (GrafoTDA grafoInicial, int verticeOrigen) {
 	return grafoFinal
 }
 
-
+// ALGORITMO PRIM
+arbol Prim (int [n][n] matrizGrafo) { // n es la cantidad de nodos que tiene el grafo
+	arbol arbolPrim = null // el arbol que retornará la funcion.
+	for (int i = 0; i < n; i++) { 
+		//en este bucle se inicializan los vectores masCercano y minDist
+		// haciendo que el vertice 0 sea el primer elegido y que entonces el vertice
+		// mas cercano de cualquier candidato con el 0 sea el 0 por no haber ninguno mas
+		// y por lo tanto la minima distnacia va a ser la arista que tengan entre esos
+		// candidatos y el vertice 0 por ser el unico.
+		masCercano[i] = 0
+		minDist[i] = matrizGrafo[0][i]
+	}
+	repeat n-1 veces { // en cada iteracion se agrega un vertice al arbol.
+		// se repite hasta que no haya mas vertices que agregar, por lo tanto n-1 veces
+		min = infinito
+		for (int j=0; j<n; j++){ //se busca el vertice mas proximo
+			if (0 <= minDist[j] < min) { 
+				//evaluo que sea mayor o igual a 0 para evitar los -1 que ya fueron agregados
+				min = minDist[j]
+				verticeNuevo = j
+			}
+		}
+		arbolPrim = arbolPrim union {(masCercano[verticeNuevo],verticeNuevo)} //añadir la arista al arbol
+		minDist[verticeNuevo] = -1 //se agrega verticeNuevo al arbol
+		for (j = 0; j<n; j++) { //se recalculan las distancias
+			// es decir, se actulizan los vecinos de K.
+			if (matrizGrafo[verticeNuevo][j] < minDist[j]) {
+				minDist[j] = matrizGrafo[verticeNuevo][j]
+				masCercano[j] = verticeNuevo
+			}
+		}
+	}
+	return arbolPrim	
+}
 
 
 
