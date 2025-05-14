@@ -299,7 +299,37 @@ arbol Prim (int [n][n] matrizGrafo) { // n es la cantidad de nodos que tiene el 
 	return arbolPrim	
 }
 
+//ALGORITMO KRUSKAL
+struct Grafo {
+	array vertices;
+	lista aristas;
+}
+struct aristaCola {
+	int nodoOrigen;
+	int nodoDestino;
+}
+arbol Kruskal (Grafo grafo) {
+	arbol = inicializarConjunto(); //arbol.length() = 0
+	listaAristas = inicializarCola();
+	listaAristas = insertarOrdenadas(grafo.aristas);
+	cantidadNodos = grafo.vertices.length()
 
+	forEach vertice in grafo.vertices {
+		vertice.inicializarConjunto(); // crea los arboles triviales, uno por cada vertice
+	}
+
+	while (arbol.length() != cantidadNodos-1){
+		aristaCola arista = listaAristas.primero() //la arista candidata con menor costo
+		listaAristas.eliminarPrimero();
+		nodoOrigen = buscar(arista.nodoOrigen);
+		nodoDestino = buscar(arista.nodoDestino);
+		if (nodoOrigen != nodoDestino){
+			combinar (nodoOrigen, nodoDestino) //fusiona los dos arboles triviales
+			arbol = arbol union {(arista)} //añade la arista al arbol
+		}
+	}
+	return arbol;
+}
 
 
 
