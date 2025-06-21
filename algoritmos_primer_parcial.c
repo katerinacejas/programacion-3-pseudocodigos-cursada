@@ -146,4 +146,203 @@ int Algoritmo Fib (int n) { // realizado con divide and conquer
 		return Fib(n − 1)+Fib(n − 2);
 	}
 }
-	
+
+
+int Algoritmo Cambio(int monto) { //input: monto. output: numero de monedas
+	int cantidadMonedasUsadas = 0;
+	int montoPagado = 0;
+	int i = 0;
+	int monedas[] = [500, 200, 100, 50, 20, 10, 5, 1];
+	while (montoPagado < monto ) && (i < monedas.length) {
+		if (montoPagado + monedas[i] <= montoPagado) {
+			montoPagado = montoPagado + monedas[i];
+			cantidadMonedasUsadas++; //mayor moneda que podemos usar
+		}
+		else {
+			i++; //seguimos buscando
+		}
+	}
+	if (i < monedas.length) 
+		return cantidadMonedasUsadas; //devolvemos el numero de monedas usadas
+	else return -1 // no hay solucion
+}
+
+struct objetosGreedy {
+	int valor;
+	int peso;
+}
+
+float [] ordenar(objetosGreedy [] objetos) { // O(n log(n))
+	float[] ordenados = new float[objetos.length]
+	for (int i = 0; i<objetos.length; i++) {
+		ordenados[i] = objetos[i].peso / objetos[i].valor;
+	}
+	sort(ordenados);
+	return ordenados;
+}
+
+float [] Algoritmo MochilaGreedy (objetosGreedy[ ] objetos, int max) { 
+// objetos[i].peso, objetos[i].valor
+	float[] conjuntoSolucion; // la salida
+	float[] objetosOrdenados = ordenar(objetos); // O(n log(n))
+	for(int i =0; i<objetos.length; i++){ // Θ(n) : inicializo el conjunto solucion
+		conjuntoSolucion[i] = 0
+	}
+	i=0
+	int accum = 0
+	while( accum < max) && (i < objetos.length){ // Θ(n)
+		conjuntoSolucion[i] = min(1, (max − accum)/objetos[i].peso)
+		accum = accum + (conjuntoSolucion[i] ∗ objetos[i].peso)
+		i++
+	}
+	return conjuntoSolucion;
+}
+
+// ESQUEMA GENERICO DE GREEDY
+Algoritmo GreedyGenerico:
+	input: conjuntoCandidatos[]
+	output: conjuntoSolucion[] //conjunto solucion del problema
+	while conjuntoCandidatos no sea vacío Y NO funcionSolucion(conjuntoSolucion):
+		x = funcionSeleccion(conjuntoCandidatos)
+		conjuntoCandidatos = conjuntoCandidatos/x
+		if funcionFactibilidad(conjuntoSolucion union x):
+			conjuntoSolucion = conjuntoSolucion union x
+	if funcionSolucion(conjuntoSolucion):
+		return conjuntoSolucion
+	else
+		return "No hay solucion"
+
+// ALGORITMO DIJKSTRA CASO 2: 
+// retorna el grafo con el camino minimo desde el vertice origen hacia todos los demas
+struct GrafoTDA {
+	int [] vertices;
+	int [] aristas;
+}
+
+algoritmo Dijkstra (GrafoTDA grafoInicial, int verticeOrigen) {
+	int []visitados = {verticeOrigen}
+	GrafoTDA grafoFinal = inicializarGrafo() // inicializa el grafo solución
+	foreach vertice in grafoInicial.vertices {
+		grafoFinal.agregarVertice(vertice) // Los nodos de grafoInicial
+	}
+	foreach vertice ∈ grafoInicial.vecindario(verticeOrigen) {
+		grafoFinal.agregarArista(verticeOrigen, vertice, grafoInicial.peso(verticeOrigen, vertice))
+	}
+	int []candidatos = inicializarConjunto() // Nodos candidatos
+	candidatos = grafoInicial.vertices \ visitados //el operador \ realiza una resta de conjuntos
+	while !candidatos.conjuntoVacio() {
+		int min = infinito
+		int nodoAux;
+		foreach nodo ∈ candidatos {
+			if (grafoFinal.existeArista(verticeOrigen, nodo) && 
+				grafoFinal.peso(verticeOrigen, nodo) < min) {
+					min = grafoFinal.peso(verticeOrigen, nodo)
+					nodoAux = nodo
+			}
+		}
+		visitados.agregarVertice(nodoAux)
+		candidatos.sacar(nodoAux)
+		int[] candidatosAux = copiar(candidatos)
+		int nodoAux2;
+		while !candidatosAux.conjuntoVacio() {
+			nodoAux2 = candidatosAux.elegir()
+			candidatosAux.sacar(nodoAux2)
+			if (grafoInicial.existeArista(nodoAux, nodoAux2)) {
+				if(grafoFinal.existeArista(verticeOrigen, nodoAux2)) {
+					if(grafoFinal.peso(verticeOrigen, nodoAux) + grafoInicial.peso(nodoAux, nodoAux2)
+						< grafoFinal.peso(verticeOrigen, nodoAux2)) {
+							grafoFinal.agregarArista(nodoAux, nodoAux2, grafoInicial.peso(nodoAux, nodoAux2))
+							grafoFinal.eliminarArista(verticeOrigen, nodoAux2)
+					}
+				}
+				else {
+					grafoFinal.agregarAristaI(nodoAux, nodoAux2, grafoInicial.peso(nodoAux, nodoAux2))
+				}
+			}
+		}
+	}
+	return grafoFinal
+}
+
+// ALGORITMO PRIM
+arbol Prim (int [n][n] matrizGrafo) { // n es la cantidad de nodos que tiene el grafo
+	arbol arbolPrim = null // el arbol que retornará la funcion.
+	for (int i = 0; i < n; i++) { 
+		//en este bucle se inicializan los vectores masCercano y minDist
+		// haciendo que el vertice 0 sea el primer elegido y que entonces el vertice
+		// mas cercano de cualquier candidato con el 0 sea el 0 por no haber ninguno mas
+		// y por lo tanto la minima distnacia va a ser la arista que tengan entre esos
+		// candidatos y el vertice 0 por ser el unico.
+		masCercano[i] = 0
+		minDist[i] = matrizGrafo[0][i]
+	}
+	repeat n-1 veces { // en cada iteracion se agrega un vertice al arbol.
+		// se repite hasta que no haya mas vertices que agregar, por lo tanto n-1 veces
+		min = infinito
+		for (int j=0; j<n; j++){ //se busca el vertice mas proximo
+			if (0 <= minDist[j] < min) { 
+				//evaluo que sea mayor o igual a 0 para evitar los -1 que ya fueron agregados
+				min = minDist[j]
+				verticeNuevo = j
+			}
+		}
+		arbolPrim = arbolPrim union {(masCercano[verticeNuevo],verticeNuevo)} //añadir la arista al arbol
+		minDist[verticeNuevo] = -1 //se agrega verticeNuevo al arbol
+		for (j = 0; j<n; j++) { //se recalculan las distancias
+			// es decir, se actulizan los vecinos de K.
+			if (matrizGrafo[verticeNuevo][j] < minDist[j]) {
+				minDist[j] = matrizGrafo[verticeNuevo][j]
+				masCercano[j] = verticeNuevo
+			}
+		}
+	}
+	return arbolPrim	
+}
+
+//ALGORITMO KRUSKAL
+struct Grafo {
+	array vertices;
+	lista aristas;
+}
+struct aristaCola {
+	int nodoOrigen;
+	int nodoDestino;
+}
+arbol Kruskal (Grafo grafo) {
+	arbol = inicializarConjunto(); //arbol.length() = 0
+	listaAristas = inicializarCola();
+	listaAristas = insertarOrdenadas(grafo.aristas);
+	cantidadNodos = grafo.vertices.length()
+
+	forEach vertice in grafo.vertices {
+		vertice.inicializarConjunto(); // crea los arboles triviales, uno por cada vertice
+	}
+
+	while (arbol.length() != cantidadNodos-1){
+		aristaCola arista = listaAristas.primero() //la arista candidata con menor costo
+		listaAristas.eliminarPrimero();
+		nodoOrigen = buscar(arista.nodoOrigen);
+		nodoDestino = buscar(arista.nodoDestino);
+		if (nodoOrigen != nodoDestino){
+			combinar(nodoOrigen, nodoDestino) //fusiona los dos arboles triviales
+			arbol = arbol union {(arista)} //añade la arista al arbol
+		}
+	}
+	return arbol;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
