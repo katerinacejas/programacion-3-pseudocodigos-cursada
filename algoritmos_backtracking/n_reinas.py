@@ -11,30 +11,34 @@ array = [2,1,0,3] es equivalente a | 0 0 1 0 |  = columna 0 1 2 3
                                    | 1 0 0 0 |
 								   | 0 1 0 1 |
 """
-def n_reinas(array, fila):
+def n_reinas(tamanio, fila=0, array=[]):
 	# caso base: si ya llene todo el array
-	if len(array)-1 == fila:
-		imprimir_tablero(array, len(array))
+	if tamanio == fila:
+		imprimir_tablero(array, tamanio)
 		return 
 	
-	for columna in range(len(array)):
-		if verificar_filas(array, fila) and verificar_diagonales(array, fila, columna):
-			array.append(fila) # ponemos una reina
+	for columna in range(tamanio):
+		if verificar_filas(array, columna) and verificar_diagonales(array, fila, columna):
+			array.append(columna) # ponemos una reina
 			print("puse una reina")
-			n_reinas(array, fila+1)
+			n_reinas(tamanio, fila+1, array)
 			array.pop() # sacamos una reina. backtracking
 
-def verificar_filas(array, fila):
+def verificar_filas(array, col):
 	print("ingrese a verificar filas")
-	for columna in range(len(array)):
-		if array[columna] == fila: 
+	for columna in array:
+		if columna == col: 
 			return False
+		
+	print("return true verificar filas")
 	return True
 
 def verificar_diagonales(array, fila, columna):
-	for i in range(len(array)):
-		if abs(array[i]-columna) == abs(i - fila):
+	for i, c in enumerate(array):
+		if abs(c - columna) == abs(i - fila):
 			return False
+
+	print("return true verificar diagonales")
 	return True
 
 def imprimir_tablero(tablero, n):
@@ -48,5 +52,4 @@ def imprimir_tablero(tablero, n):
         print(linea)
     print() 
 
-array = [0,0,0,0] # tablero de 4x4
-n_reinas(array, 0)
+n_reinas(4)
