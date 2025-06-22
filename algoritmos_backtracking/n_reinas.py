@@ -16,7 +16,7 @@ def n_reinas(tamanio, fila=0, array=[]):
 	if tamanio == fila:
 		imprimir_tablero(array, tamanio)
 		return 
-	
+		
 	for columna in range(tamanio):
 		if verificar_filas(array, columna) and verificar_diagonales(array, fila, columna):
 			array.append(columna) # ponemos una reina
