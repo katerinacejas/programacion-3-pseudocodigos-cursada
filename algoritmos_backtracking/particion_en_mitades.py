@@ -23,8 +23,10 @@ def resolver(conjunto, solucion, etapa):
     # aca voy agregando los numeros iterando con i = 0 o 1
     for i in range(2):
         solucion.append(i)
+
         if(len(solucion) > len(conjunto)):
             return
+        
         #caso base: cuando la etapa es la ultima del conjunto
         if etapa == len(conjunto)-1:
             suma1 = 0
@@ -40,12 +42,15 @@ def resolver(conjunto, solucion, etapa):
                 print(conjunto)
                 return
             else:
+                # aca esta el backtracking, para sacar el nro si no sirvio
                 solucion.pop()
         
         # aun quedan nros del conjunto por agregar al conjunto solucion
         else:
             #aumentamos la etapa
             resolver(conjunto, solucion, etapa+1)
+
+            # aca esta el backtracking, para sacar el nro si no sirvio
             solucion.pop()
 
 
