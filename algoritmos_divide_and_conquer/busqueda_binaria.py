@@ -1,8 +1,5 @@
 '''
     encontrar un elemento especifico en una lista ordenada de elementos
-    ejemplo:
-    lista = [5,8,13,14,15,26]
-    elemento_a_buscar = 15
 '''
 def buscar(elemento_a_buscar, lista):
     inicio = 0
