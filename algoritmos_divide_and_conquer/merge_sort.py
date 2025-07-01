@@ -58,5 +58,4 @@ def resolver_merge_sort(lista, inicio, fin):
         lista[inicio + i] = ordenados[i]
 
 lista = [4,2,8,5,6,3,9,1,0]
-merge_sort(lista)
-    
+merge_sort(lista)   
