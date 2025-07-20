@@ -1,3 +1,4 @@
+
 '''
 Dado un conjunto de n enteros se desea encontrar, si existe, una particion en dos
 subconjuntos disjuntos, tal que la suma de sus elementos sea la misma.
