@@ -42,12 +42,12 @@ def resolver_laberinto(lab, entrada_i, entrada_j, salida_i, salida_j, solucion):
         print(f"solucion encontrada es: ", solucion)
         return
 
-    # caso, lo siguiente es una pared y fuera del laberinto en alguno de los dos ejes
+    # PODA DE FACTIBILIDAD: caso, lo siguiente es una pared y fuera del laberinto en alguno de los dos ejes
     if es_un_lateral_sin_salida(lab, entrada_i, entrada_j, salida_i, salida_j) == True:
         print("encontramos un lateral del laberinto sin salida")
         return 
     
-	# caso, no se puede ir ni abajo ni a la derecha, no hay salida por ahí
+	# PODA DE FACTIBILIDAD: caso, no se puede ir ni abajo ni a la derecha, no hay salida por ahí
     if entrada_i == salida_i and entrada_j != salida_j:
         if lab[entrada_i][entrada_j+1] == 1:
             print("no se puede avanzar ni abajo ni a la derecha")
