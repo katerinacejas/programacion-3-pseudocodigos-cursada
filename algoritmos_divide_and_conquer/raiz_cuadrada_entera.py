@@ -16,7 +16,7 @@ def calcular_raiz_cuadrada_entera(nro):
 
 def raiz_cuadrada_entera(nro, inicio, fin):
 	if inicio >= fin:
-		return fin
+		return inicio
 	
 	mid = (inicio + fin) // 2
 
@@ -30,7 +30,7 @@ def raiz_cuadrada_entera(nro, inicio, fin):
 		else:
 			return raiz_cuadrada_entera(nro, mid+1, fin)
 
-calcular_raiz_cuadrada_entera(10)
+calcular_raiz_cuadrada_entera(789456)
 
 '''
 a: cantidad de veces que se llama a la recursividad
@@ -40,5 +40,5 @@ a = 1
 b = 2
 k = 0
 b^k = 2^0 = 1 = a
---> complejidad temporal = O(n^0 * log(n)) --> O(log(n)) < O(n) --> cumple con el requisito
+--> complejidad temporal = O(n^0 * log(n)) --> O(log(n)) < O(n) --> cumple con el requisito                                                                                                                            
 '''
