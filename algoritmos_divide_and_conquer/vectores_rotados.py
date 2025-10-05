@@ -1,3 +1,10 @@
+
+
+
+## ESTE ALGORITMO ESTA MAL, ES EL DEL PARCIAL. REHACER.
+
+
+ 
 def max_min_vector_rotad (lista, inicio, fin):
     if inicio >= fin:
         return lista[inicio]

@@ -23,7 +23,7 @@ def palindromo(palabra):
 
 def resolver_palindromo(palabra, inicio, fin):
     # caso base, inicio y fin son iguales, o  inicio > fin (para las palabras de 2 letras por ejemplo)
-    if inicio == fin or inicio > fin:
+    if inicio >= fin:
         print(f"La palabra {palabra} es palindroma")
         return
     # caso 
